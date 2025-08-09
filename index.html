@@ -19,7 +19,7 @@
     <style>
         body { font-family: 'Segoe UI', Tahoma, Arial, sans-serif; }
         .map-container { 
-            background: linear-gradient(45deg, #e8f5e8 0%, #f0f8f0 25%, #e0f0e0 50%, #d8e8d8 75%, #f5f8f5 100%);
+            background: linear-gradient(135deg, #f5f3f0 0%, #e8e2db 50%, #d4c4b0 100%);
             position: relative;
             overflow: hidden;
         }
@@ -31,12 +31,9 @@
             right: 0;
             bottom: 0;
             background-image: 
-                radial-gradient(circle at 20% 30%, rgba(34, 139, 34, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(70, 130, 180, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 40% 70%, rgba(160, 82, 45, 0.1) 0%, transparent 50%),
-                linear-gradient(90deg, rgba(105, 105, 105, 0.05) 1px, transparent 1px),
-                linear-gradient(rgba(105, 105, 105, 0.05) 1px, transparent 1px);
-            background-size: 100% 100%, 100% 100%, 100% 100%, 50px 50px, 50px 50px;
+                radial-gradient(circle at 20% 30%, rgba(139, 195, 74, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(76, 175, 80, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 60% 20%, rgba(156, 204, 101, 0.1) 0%, transparent 50%);
             pointer-events: none;
         }
         .map-roads {
@@ -115,6 +112,20 @@
             from { opacity: 0; }
             to { opacity: 1; }
         }
+        .nav-btn {
+            transition: all 0.2s ease;
+        }
+        .nav-btn.active {
+            background-color: rgb(243 232 255);
+            color: rgb(147 51 234);
+        }
+        .category-btn {
+            transition: all 0.2s ease;
+        }
+        .category-btn.active {
+            background-color: rgb(147 51 234) !important;
+            color: white !important;
+        }
     </style>
 </head>
 <body class="bg-gray-50 font-arabic">
@@ -146,6 +157,170 @@
                 </button>
             </div>
         </div>
+        
+        <!-- شريط التنقل السفلي -->
+        <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-4 py-2">
+            <div class="flex justify-around items-center">
+                <button onclick="showMapTab()" class="nav-btn active flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">🗺️</span>
+                    <span class="text-xs font-medium">الخريطة</span>
+                </button>
+                <button onclick="showExploreTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">🔍</span>
+                    <span class="text-xs font-medium">الاستكشاف</span>
+                </button>
+                <button onclick="showBookingsTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">📅</span>
+                    <span class="text-xs font-medium">الحجوزات</span>
+                </button>
+                <button onclick="showAccountTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">👤</span>
+                    <span class="text-xs font-medium">الحساب</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- شاشة الاستكشاف -->
+    <div id="exploreScreen" class="hidden min-h-screen bg-gray-100 pb-20">
+        <div class="bg-white shadow-lg p-4">
+            <h2 class="text-xl font-bold text-center">استكشف التجارب</h2>
+        </div>
+        
+        <div class="p-4 space-y-4">
+            <div class="bg-white rounded-2xl shadow-lg p-4">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="text-right">
+                        <h3 class="font-bold">ورشة صناعة السبح</h3>
+                        <p class="text-gray-600 text-sm">تعلم صناعة السبح التقليدية</p>
+                        <p class="text-purple-600 font-semibold">180 ريال</p>
+                    </div>
+                    <span class="text-3xl">📿</span>
+                </div>
+                <button onclick="showExperience(1)" class="w-full bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700">
+                    عرض التفاصيل
+                </button>
+            </div>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-4">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="text-right">
+                        <h3 class="font-bold">تجربة الرماية التراثية</h3>
+                        <p class="text-gray-600 text-sm">تعلم فن الرماية بالقوس والسهم</p>
+                        <p class="text-purple-600 font-semibold">100 ريال</p>
+                    </div>
+                    <span class="text-3xl">🏹</span>
+                </div>
+                <button onclick="showExperience(2)" class="w-full bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700">
+                    عرض التفاصيل
+                </button>
+            </div>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-4">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="text-right">
+                        <h3 class="font-bold">ورشة الخط العربي والزخرفة</h3>
+                        <p class="text-gray-600 text-sm">تعلم فن الخط العربي الجميل</p>
+                        <p class="text-purple-600 font-semibold">120 ريال</p>
+                    </div>
+                    <span class="text-3xl">🎨</span>
+                </div>
+                <button onclick="showExperience(3)" class="w-full bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700">
+                    عرض التفاصيل
+                </button>
+            </div>
+        </div>
+        
+        <!-- شريط التنقل السفلي -->
+        <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-4 py-2">
+            <div class="flex justify-around items-center">
+                <button onclick="showMapTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">🗺️</span>
+                    <span class="text-xs font-medium">الخريطة</span>
+                </button>
+                <button onclick="showExploreTab()" class="nav-btn active flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">🔍</span>
+                    <span class="text-xs font-medium">الاستكشاف</span>
+                </button>
+                <button onclick="showBookingsTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">📅</span>
+                    <span class="text-xs font-medium">الحجوزات</span>
+                </button>
+                <button onclick="showAccountTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">👤</span>
+                    <span class="text-xs font-medium">الحساب</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- شاشة الحجوزات -->
+    <div id="bookingsScreen" class="hidden min-h-screen bg-gray-100 pb-20">
+        <div class="bg-white shadow-lg p-4">
+            <h2 class="text-xl font-bold text-center">حجوزاتي</h2>
+        </div>
+        
+        <div class="p-4 space-y-4">
+            <div class="bg-white rounded-2xl shadow-lg p-4">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="text-right">
+                        <h3 class="font-bold">تجربة الرماية التراثية</h3>
+                        <p class="text-gray-600 text-sm">الجمعة 15/12 - 3:00 م</p>
+                        <p class="text-purple-600 font-semibold">200 ريال</p>
+                    </div>
+                    <span class="text-3xl">🏹</span>
+                </div>
+                <div class="flex space-x-2 space-x-reverse">
+                    <button class="flex-1 bg-purple-600 text-white py-2 rounded-lg text-sm hover:bg-purple-700">
+                        تعديل
+                    </button>
+                    <button class="flex-1 bg-red-600 text-white py-2 rounded-lg text-sm hover:bg-red-700">
+                        إلغاء
+                    </button>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-4">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="text-right">
+                        <h3 class="font-bold">ورشة الخط العربي</h3>
+                        <p class="text-gray-600 text-sm">السبت 23/12 - 10:00 ص</p>
+                        <p class="text-purple-600 font-semibold">150 ريال</p>
+                    </div>
+                    <span class="text-3xl">🎨</span>
+                </div>
+                <div class="flex space-x-2 space-x-reverse">
+                    <button class="flex-1 bg-purple-600 text-white py-2 rounded-lg text-sm hover:bg-purple-700">
+                        تعديل
+                    </button>
+                    <button class="flex-1 bg-red-600 text-white py-2 rounded-lg text-sm hover:bg-red-700">
+                        إلغاء
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- شريط التنقل السفلي -->
+        <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-4 py-2">
+            <div class="flex justify-around items-center">
+                <button onclick="showMapTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">🗺️</span>
+                    <span class="text-xs font-medium">الخريطة</span>
+                </button>
+                <button onclick="showExploreTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">🔍</span>
+                    <span class="text-xs font-medium">الاستكشاف</span>
+                </button>
+                <button onclick="showBookingsTab()" class="nav-btn active flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">📅</span>
+                    <span class="text-xs font-medium">الحجوزات</span>
+                </button>
+                <button onclick="showAccountTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">👤</span>
+                    <span class="text-xs font-medium">الحساب</span>
+                </button>
+            </div>
+        </div>
     </div>
 
     <!-- شاشة تسجيل الدخول -->
@@ -159,6 +334,170 @@
                 <input type="password" placeholder="كلمة المرور" class="w-full p-3 border border-gray-300 rounded-xl text-right">
                 <button onclick="showMap()" class="w-full bg-purple-600 text-white py-3 rounded-xl font-semibold hover:bg-purple-700 transition-colors">
                     دخول
+                </button>
+            </div>
+        </div>
+        
+        <!-- شريط التنقل السفلي -->
+        <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-4 py-2">
+            <div class="flex justify-around items-center">
+                <button onclick="showMapTab()" class="nav-btn active flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">🗺️</span>
+                    <span class="text-xs font-medium">الخريطة</span>
+                </button>
+                <button onclick="showExploreTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">🔍</span>
+                    <span class="text-xs font-medium">الاستكشاف</span>
+                </button>
+                <button onclick="showBookingsTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">📅</span>
+                    <span class="text-xs font-medium">الحجوزات</span>
+                </button>
+                <button onclick="showAccountTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">👤</span>
+                    <span class="text-xs font-medium">الحساب</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- شاشة الاستكشاف -->
+    <div id="exploreScreen" class="hidden min-h-screen bg-gray-100 pb-20">
+        <div class="bg-white shadow-lg p-4">
+            <h2 class="text-xl font-bold text-center">استكشف التجارب</h2>
+        </div>
+        
+        <div class="p-4 space-y-4">
+            <div class="bg-white rounded-2xl shadow-lg p-4">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="text-right">
+                        <h3 class="font-bold">ورشة صناعة السبح</h3>
+                        <p class="text-gray-600 text-sm">تعلم صناعة السبح التقليدية</p>
+                        <p class="text-purple-600 font-semibold">180 ريال</p>
+                    </div>
+                    <span class="text-3xl">📿</span>
+                </div>
+                <button onclick="showExperience(1)" class="w-full bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700">
+                    عرض التفاصيل
+                </button>
+            </div>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-4">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="text-right">
+                        <h3 class="font-bold">تجربة الرماية التراثية</h3>
+                        <p class="text-gray-600 text-sm">تعلم فن الرماية بالقوس والسهم</p>
+                        <p class="text-purple-600 font-semibold">100 ريال</p>
+                    </div>
+                    <span class="text-3xl">🏹</span>
+                </div>
+                <button onclick="showExperience(2)" class="w-full bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700">
+                    عرض التفاصيل
+                </button>
+            </div>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-4">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="text-right">
+                        <h3 class="font-bold">ورشة الخط العربي والزخرفة</h3>
+                        <p class="text-gray-600 text-sm">تعلم فن الخط العربي الجميل</p>
+                        <p class="text-purple-600 font-semibold">120 ريال</p>
+                    </div>
+                    <span class="text-3xl">🎨</span>
+                </div>
+                <button onclick="showExperience(3)" class="w-full bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700">
+                    عرض التفاصيل
+                </button>
+            </div>
+        </div>
+        
+        <!-- شريط التنقل السفلي -->
+        <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-4 py-2">
+            <div class="flex justify-around items-center">
+                <button onclick="showMapTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">🗺️</span>
+                    <span class="text-xs font-medium">الخريطة</span>
+                </button>
+                <button onclick="showExploreTab()" class="nav-btn active flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">🔍</span>
+                    <span class="text-xs font-medium">الاستكشاف</span>
+                </button>
+                <button onclick="showBookingsTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">📅</span>
+                    <span class="text-xs font-medium">الحجوزات</span>
+                </button>
+                <button onclick="showAccountTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">👤</span>
+                    <span class="text-xs font-medium">الحساب</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- شاشة الحجوزات -->
+    <div id="bookingsScreen" class="hidden min-h-screen bg-gray-100 pb-20">
+        <div class="bg-white shadow-lg p-4">
+            <h2 class="text-xl font-bold text-center">حجوزاتي</h2>
+        </div>
+        
+        <div class="p-4 space-y-4">
+            <div class="bg-white rounded-2xl shadow-lg p-4">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="text-right">
+                        <h3 class="font-bold">تجربة الرماية التراثية</h3>
+                        <p class="text-gray-600 text-sm">الجمعة 15/12 - 3:00 م</p>
+                        <p class="text-purple-600 font-semibold">200 ريال</p>
+                    </div>
+                    <span class="text-3xl">🏹</span>
+                </div>
+                <div class="flex space-x-2 space-x-reverse">
+                    <button class="flex-1 bg-purple-600 text-white py-2 rounded-lg text-sm hover:bg-purple-700">
+                        تعديل
+                    </button>
+                    <button class="flex-1 bg-red-600 text-white py-2 rounded-lg text-sm hover:bg-red-700">
+                        إلغاء
+                    </button>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-4">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="text-right">
+                        <h3 class="font-bold">ورشة الخط العربي</h3>
+                        <p class="text-gray-600 text-sm">السبت 23/12 - 10:00 ص</p>
+                        <p class="text-purple-600 font-semibold">150 ريال</p>
+                    </div>
+                    <span class="text-3xl">🎨</span>
+                </div>
+                <div class="flex space-x-2 space-x-reverse">
+                    <button class="flex-1 bg-purple-600 text-white py-2 rounded-lg text-sm hover:bg-purple-700">
+                        تعديل
+                    </button>
+                    <button class="flex-1 bg-red-600 text-white py-2 rounded-lg text-sm hover:bg-red-700">
+                        إلغاء
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- شريط التنقل السفلي -->
+        <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-4 py-2">
+            <div class="flex justify-around items-center">
+                <button onclick="showMapTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">🗺️</span>
+                    <span class="text-xs font-medium">الخريطة</span>
+                </button>
+                <button onclick="showExploreTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">🔍</span>
+                    <span class="text-xs font-medium">الاستكشاف</span>
+                </button>
+                <button onclick="showBookingsTab()" class="nav-btn active flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">📅</span>
+                    <span class="text-xs font-medium">الحجوزات</span>
+                </button>
+                <button onclick="showAccountTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">👤</span>
+                    <span class="text-xs font-medium">الحساب</span>
                 </button>
             </div>
         </div>
@@ -179,10 +518,174 @@
                 </button>
             </div>
         </div>
+        
+        <!-- شريط التنقل السفلي -->
+        <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-4 py-2">
+            <div class="flex justify-around items-center">
+                <button onclick="showMapTab()" class="nav-btn active flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">🗺️</span>
+                    <span class="text-xs font-medium">الخريطة</span>
+                </button>
+                <button onclick="showExploreTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">🔍</span>
+                    <span class="text-xs font-medium">الاستكشاف</span>
+                </button>
+                <button onclick="showBookingsTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">📅</span>
+                    <span class="text-xs font-medium">الحجوزات</span>
+                </button>
+                <button onclick="showAccountTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">👤</span>
+                    <span class="text-xs font-medium">الحساب</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- شاشة الاستكشاف -->
+    <div id="exploreScreen" class="hidden min-h-screen bg-gray-100 pb-20">
+        <div class="bg-white shadow-lg p-4">
+            <h2 class="text-xl font-bold text-center">استكشف التجارب</h2>
+        </div>
+        
+        <div class="p-4 space-y-4">
+            <div class="bg-white rounded-2xl shadow-lg p-4">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="text-right">
+                        <h3 class="font-bold">ورشة صناعة السبح</h3>
+                        <p class="text-gray-600 text-sm">تعلم صناعة السبح التقليدية</p>
+                        <p class="text-purple-600 font-semibold">180 ريال</p>
+                    </div>
+                    <span class="text-3xl">📿</span>
+                </div>
+                <button onclick="showExperience(1)" class="w-full bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700">
+                    عرض التفاصيل
+                </button>
+            </div>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-4">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="text-right">
+                        <h3 class="font-bold">تجربة الرماية التراثية</h3>
+                        <p class="text-gray-600 text-sm">تعلم فن الرماية بالقوس والسهم</p>
+                        <p class="text-purple-600 font-semibold">100 ريال</p>
+                    </div>
+                    <span class="text-3xl">🏹</span>
+                </div>
+                <button onclick="showExperience(2)" class="w-full bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700">
+                    عرض التفاصيل
+                </button>
+            </div>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-4">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="text-right">
+                        <h3 class="font-bold">ورشة الخط العربي والزخرفة</h3>
+                        <p class="text-gray-600 text-sm">تعلم فن الخط العربي الجميل</p>
+                        <p class="text-purple-600 font-semibold">120 ريال</p>
+                    </div>
+                    <span class="text-3xl">🎨</span>
+                </div>
+                <button onclick="showExperience(3)" class="w-full bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700">
+                    عرض التفاصيل
+                </button>
+            </div>
+        </div>
+        
+        <!-- شريط التنقل السفلي -->
+        <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-4 py-2">
+            <div class="flex justify-around items-center">
+                <button onclick="showMapTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">🗺️</span>
+                    <span class="text-xs font-medium">الخريطة</span>
+                </button>
+                <button onclick="showExploreTab()" class="nav-btn active flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">🔍</span>
+                    <span class="text-xs font-medium">الاستكشاف</span>
+                </button>
+                <button onclick="showBookingsTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">📅</span>
+                    <span class="text-xs font-medium">الحجوزات</span>
+                </button>
+                <button onclick="showAccountTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">👤</span>
+                    <span class="text-xs font-medium">الحساب</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- شاشة الحجوزات -->
+    <div id="bookingsScreen" class="hidden min-h-screen bg-gray-100 pb-20">
+        <div class="bg-white shadow-lg p-4">
+            <h2 class="text-xl font-bold text-center">حجوزاتي</h2>
+        </div>
+        
+        <div class="p-4 space-y-4">
+            <div class="bg-white rounded-2xl shadow-lg p-4">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="text-right">
+                        <h3 class="font-bold">تجربة الرماية التراثية</h3>
+                        <p class="text-gray-600 text-sm">الجمعة 15/12 - 3:00 م</p>
+                        <p class="text-purple-600 font-semibold">200 ريال</p>
+                    </div>
+                    <span class="text-3xl">🏹</span>
+                </div>
+                <div class="flex space-x-2 space-x-reverse">
+                    <button class="flex-1 bg-purple-600 text-white py-2 rounded-lg text-sm hover:bg-purple-700">
+                        تعديل
+                    </button>
+                    <button class="flex-1 bg-red-600 text-white py-2 rounded-lg text-sm hover:bg-red-700">
+                        إلغاء
+                    </button>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-4">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="text-right">
+                        <h3 class="font-bold">ورشة الخط العربي</h3>
+                        <p class="text-gray-600 text-sm">السبت 23/12 - 10:00 ص</p>
+                        <p class="text-purple-600 font-semibold">150 ريال</p>
+                    </div>
+                    <span class="text-3xl">🎨</span>
+                </div>
+                <div class="flex space-x-2 space-x-reverse">
+                    <button class="flex-1 bg-purple-600 text-white py-2 rounded-lg text-sm hover:bg-purple-700">
+                        تعديل
+                    </button>
+                    <button class="flex-1 bg-red-600 text-white py-2 rounded-lg text-sm hover:bg-red-700">
+                        إلغاء
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- شريط التنقل السفلي -->
+        <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-4 py-2">
+            <div class="flex justify-around items-center">
+                <button onclick="showMapTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">🗺️</span>
+                    <span class="text-xs font-medium">الخريطة</span>
+                </button>
+                <button onclick="showExploreTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">🔍</span>
+                    <span class="text-xs font-medium">الاستكشاف</span>
+                </button>
+                <button onclick="showBookingsTab()" class="nav-btn active flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">📅</span>
+                    <span class="text-xs font-medium">الحجوزات</span>
+                </button>
+                <button onclick="showAccountTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">👤</span>
+                    <span class="text-xs font-medium">الحساب</span>
+                </button>
+            </div>
+        </div>
     </div>
 
     <!-- شاشة الخريطة -->
-    <div id="mapScreen" class="hidden min-h-screen bg-gray-100">
+    <div id="mapScreen" class="hidden min-h-screen bg-gray-100 pb-20">
         <!-- شريط البحث العلوي -->
         <div class="bg-white shadow-lg p-4">
             <div class="flex items-center space-x-4 space-x-reverse">
@@ -202,61 +705,276 @@
             </div>
         </div>
 
-        <!-- الخريطة -->
-        <div class="map-container relative h-screen" id="mapContainer">
+        <!-- التصنيفات -->
+        <div class="bg-white p-4 shadow-sm">
+            <div class="flex space-x-3 space-x-reverse overflow-x-auto pb-2">
+                <button onclick="filterByCategory('all')" class="category-btn active flex-shrink-0 px-4 py-2 bg-purple-600 text-white rounded-full text-sm font-medium">
+                    الكل
+                </button>
+                <button onclick="filterByCategory('crafts')" class="category-btn flex-shrink-0 px-4 py-2 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-200">
+                    🎨 حرف يدوية
+                </button>
+                <button onclick="filterByCategory('sports')" class="category-btn flex-shrink-0 px-4 py-2 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-200">
+                    🏹 رياضة
+                </button>
+                <button onclick="filterByCategory('culture')" class="category-btn flex-shrink-0 px-4 py-2 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-200">
+                    🏛️ ثقافية
+                </button>
+                <button onclick="filterByCategory('education')" class="category-btn flex-shrink-0 px-4 py-2 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-200">
+                    📚 تعليمية
+                </button>
+                <button onclick="filterByCategory('food')" class="category-btn flex-shrink-0 px-4 py-2 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-200">
+                    🍳 طعام
+                </button>
+            </div>
+        </div>
+
+        <!-- الخريطة في مستطيل -->
+        <div class="p-4">
+            <div class="map-container relative bg-white rounded-2xl shadow-lg overflow-hidden" style="height: 400px;" id="mapContainer">
             <!-- أزرار التحكم في التكبير -->
             <div class="zoom-controls">
                 <button class="zoom-btn" onclick="zoomIn()">+</button>
                 <button class="zoom-btn" onclick="zoomOut()">-</button>
             </div>
             
-            <!-- الطرق -->
+            <!-- طرق المدينة المنورة -->
             <div class="map-roads">
-                <div class="road road-horizontal" style="top: 25%;"></div>
-                <div class="road road-horizontal" style="top: 50%;"></div>
-                <div class="road road-horizontal" style="top: 75%;"></div>
-                <div class="road road-vertical" style="left: 30%;"></div>
-                <div class="road road-vertical" style="left: 60%;"></div>
+                <!-- طريق الملك عبدالعزيز الرئيسي -->
+                <div class="road road-horizontal" style="top: 40%; height: 6px; background: rgba(100, 100, 100, 0.4);"></div>
+                <!-- طريق الأمير عبدالمجيد -->
+                <div class="road road-horizontal" style="top: 60%; height: 4px;"></div>
+                <!-- طريق قباء -->
+                <div class="road road-horizontal" style="top: 25%; height: 3px;"></div>
+                <!-- طريق الهجرة -->
+                <div class="road road-vertical" style="left: 45%; width: 5px; background: rgba(100, 100, 100, 0.4);"></div>
+                <!-- طريق المطار -->
+                <div class="road road-vertical" style="left: 70%; width: 4px;"></div>
+                <!-- طريق العوالي -->
+                <div class="road road-vertical" style="left: 25%; width: 3px;"></div>
+                <!-- الطريق الدائري -->
+                <div style="position: absolute; top: 15%; left: 15%; width: 70%; height: 70%; border: 3px solid rgba(100, 100, 100, 0.3); border-radius: 50%; pointer-events: none;"></div>
             </div>
             
-            <!-- نقاط التجارب على الخريطة -->
-            <div class="experience-pin absolute top-1/4 right-1/4 bg-red-500 text-white p-3 rounded-full shadow-lg" onclick="showExperience(1)">
-                🎭
+            <!-- المسجد النبوي الشريف -->
+            <div class="absolute top-2/5 right-2/5 bg-green-800 text-white p-4 rounded-full shadow-2xl border-4 border-green-600" style="font-size: 24px; z-index: 5;">
+                🕌
             </div>
-            <div class="experience-pin absolute top-1/3 right-1/2 bg-green-500 text-white p-3 rounded-full shadow-lg" onclick="showExperience(2)">
-                🍳
+            <div class="absolute top-2/5 right-2/5 text-green-800 font-bold text-xs mt-16 mr-8 bg-white px-2 py-1 rounded shadow" style="z-index: 5;">
+                المسجد النبوي
             </div>
-            <div class="experience-pin absolute top-1/2 right-1/3 bg-blue-500 text-white p-3 rounded-full shadow-lg" onclick="showExperience(3)">
+            
+            <!-- نقاط التجارب حول المدينة المنورة -->
+            <!-- منطقة الحرم -->
+            <div class="experience-pin absolute top-1/3 right-1/3 bg-amber-600 text-white p-3 rounded-full shadow-lg" onclick="showExperience(1)">
+                📿
+            </div>
+            <div class="experience-pin absolute top-1/2 right-1/2 bg-orange-600 text-white p-3 rounded-full shadow-lg" onclick="showExperience(2)">
+                🏹
+            </div>
+            
+            <!-- منطقة قباء -->
+            <div class="experience-pin absolute top-1/5 right-1/4 bg-blue-500 text-white p-3 rounded-full shadow-lg" onclick="showExperience(3)">
                 🎨
             </div>
-            <div class="experience-pin absolute top-2/3 right-2/3 bg-yellow-500 text-white p-3 rounded-full shadow-lg" onclick="showExperience(4)">
-                🏃‍♂️
-            </div>
-            
-            <!-- التجارب الثقافية والتاريخية الجديدة -->
-            <div class="experience-pin absolute top-1/5 right-3/5 bg-purple-600 text-white p-3 rounded-full shadow-lg" onclick="showExperience(5)">
+            <div class="experience-pin absolute top-1/4 right-1/6 bg-purple-600 text-white p-3 rounded-full shadow-lg" onclick="showExperience(5)">
                 🏛️
             </div>
-            <div class="experience-pin absolute top-2/5 right-1/5 bg-indigo-600 text-white p-3 rounded-full shadow-lg" onclick="showExperience(6)">
+            
+            <!-- منطقة العوالي -->
+            <div class="experience-pin absolute top-2/3 right-1/5 bg-yellow-500 text-white p-3 rounded-full shadow-lg" onclick="showExperience(4)">
+                🏃‍♂️
+            </div>
+            <div class="experience-pin absolute top-3/4 right-1/4 bg-emerald-600 text-white p-3 rounded-full shadow-lg" onclick="showExperience(12)">
+                🐎
+            </div>
+            
+            <!-- منطقة الجامعة -->
+            <div class="experience-pin absolute top-1/6 right-3/4 bg-indigo-600 text-white p-3 rounded-full shadow-lg" onclick="showExperience(6)">
                 ✍️
             </div>
+            <div class="experience-pin absolute top-1/4 right-4/5 bg-orange-600 text-white p-3 rounded-full shadow-lg" onclick="showExperience(11)">
+                🎵
+            </div>
+            
+            <!-- منطقة المطار -->
             <div class="experience-pin absolute top-3/5 right-4/5 bg-pink-500 text-white p-3 rounded-full shadow-lg" onclick="showExperience(7)">
                 🌸
             </div>
-            <div class="experience-pin absolute top-4/5 right-2/5 bg-amber-600 text-white p-3 rounded-full shadow-lg" onclick="showExperience(8)">
-                🕌
-            </div>
-            <div class="experience-pin absolute top-1/6 right-4/6 bg-teal-600 text-white p-3 rounded-full shadow-lg" onclick="showExperience(9)">
+            <div class="experience-pin absolute top-4/5 right-3/5 bg-teal-600 text-white p-3 rounded-full shadow-lg" onclick="showExperience(9)">
                 🏺
             </div>
-            <div class="experience-pin absolute top-3/4 right-1/6 bg-cyan-600 text-white p-3 rounded-full shadow-lg" onclick="showExperience(10)">
+            
+            <!-- منطقة وسط المدينة -->
+            <div class="experience-pin absolute top-2/5 right-3/4 bg-amber-600 text-white p-3 rounded-full shadow-lg" onclick="showExperience(8)">
+                🕌
+            </div>
+            <div class="experience-pin absolute top-3/4 right-2/3 bg-cyan-600 text-white p-3 rounded-full shadow-lg" onclick="showExperience(10)">
                 📸
             </div>
-            <div class="experience-pin absolute top-1/8 right-5/6 bg-orange-600 text-white p-3 rounded-full shadow-lg" onclick="showExperience(11)">
-                🎵
+        </div>
+        
+        <!-- شريط التنقل السفلي -->
+        <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-4 py-2">
+            <div class="flex justify-around items-center">
+                <button onclick="showMapTab()" class="nav-btn active flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">🗺️</span>
+                    <span class="text-xs font-medium">الخريطة</span>
+                </button>
+                <button onclick="showExploreTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">🔍</span>
+                    <span class="text-xs font-medium">الاستكشاف</span>
+                </button>
+                <button onclick="showBookingsTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">📅</span>
+                    <span class="text-xs font-medium">الحجوزات</span>
+                </button>
+                <button onclick="showAccountTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">👤</span>
+                    <span class="text-xs font-medium">الحساب</span>
+                </button>
             </div>
-            <div class="experience-pin absolute top-5/6 right-3/4 bg-emerald-600 text-white p-3 rounded-full shadow-lg" onclick="showExperience(12)">
-                🐎
+        </div>
+    </div>
+
+    <!-- شاشة الاستكشاف -->
+    <div id="exploreScreen" class="hidden min-h-screen bg-gray-100 pb-20">
+        <div class="bg-white shadow-lg p-4">
+            <h2 class="text-xl font-bold text-center">استكشف التجارب</h2>
+        </div>
+        
+        <div class="p-4 space-y-4">
+            <div class="bg-white rounded-2xl shadow-lg p-4">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="text-right">
+                        <h3 class="font-bold">ورشة صناعة السبح</h3>
+                        <p class="text-gray-600 text-sm">تعلم صناعة السبح التقليدية</p>
+                        <p class="text-purple-600 font-semibold">180 ريال</p>
+                    </div>
+                    <span class="text-3xl">📿</span>
+                </div>
+                <button onclick="showExperience(1)" class="w-full bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700">
+                    عرض التفاصيل
+                </button>
+            </div>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-4">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="text-right">
+                        <h3 class="font-bold">تجربة الرماية التراثية</h3>
+                        <p class="text-gray-600 text-sm">تعلم فن الرماية بالقوس والسهم</p>
+                        <p class="text-purple-600 font-semibold">100 ريال</p>
+                    </div>
+                    <span class="text-3xl">🏹</span>
+                </div>
+                <button onclick="showExperience(2)" class="w-full bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700">
+                    عرض التفاصيل
+                </button>
+            </div>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-4">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="text-right">
+                        <h3 class="font-bold">ورشة الخط العربي والزخرفة</h3>
+                        <p class="text-gray-600 text-sm">تعلم فن الخط العربي الجميل</p>
+                        <p class="text-purple-600 font-semibold">120 ريال</p>
+                    </div>
+                    <span class="text-3xl">🎨</span>
+                </div>
+                <button onclick="showExperience(3)" class="w-full bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700">
+                    عرض التفاصيل
+                </button>
+            </div>
+        </div>
+        
+        <!-- شريط التنقل السفلي -->
+        <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-4 py-2">
+            <div class="flex justify-around items-center">
+                <button onclick="showMapTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">🗺️</span>
+                    <span class="text-xs font-medium">الخريطة</span>
+                </button>
+                <button onclick="showExploreTab()" class="nav-btn active flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">🔍</span>
+                    <span class="text-xs font-medium">الاستكشاف</span>
+                </button>
+                <button onclick="showBookingsTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">📅</span>
+                    <span class="text-xs font-medium">الحجوزات</span>
+                </button>
+                <button onclick="showAccountTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">👤</span>
+                    <span class="text-xs font-medium">الحساب</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- شاشة الحجوزات -->
+    <div id="bookingsScreen" class="hidden min-h-screen bg-gray-100 pb-20">
+        <div class="bg-white shadow-lg p-4">
+            <h2 class="text-xl font-bold text-center">حجوزاتي</h2>
+        </div>
+        
+        <div class="p-4 space-y-4">
+            <div class="bg-white rounded-2xl shadow-lg p-4">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="text-right">
+                        <h3 class="font-bold">تجربة الرماية التراثية</h3>
+                        <p class="text-gray-600 text-sm">الجمعة 15/12 - 3:00 م</p>
+                        <p class="text-purple-600 font-semibold">200 ريال</p>
+                    </div>
+                    <span class="text-3xl">🏹</span>
+                </div>
+                <div class="flex space-x-2 space-x-reverse">
+                    <button class="flex-1 bg-purple-600 text-white py-2 rounded-lg text-sm hover:bg-purple-700">
+                        تعديل
+                    </button>
+                    <button class="flex-1 bg-red-600 text-white py-2 rounded-lg text-sm hover:bg-red-700">
+                        إلغاء
+                    </button>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-4">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="text-right">
+                        <h3 class="font-bold">ورشة الخط العربي</h3>
+                        <p class="text-gray-600 text-sm">السبت 23/12 - 10:00 ص</p>
+                        <p class="text-purple-600 font-semibold">150 ريال</p>
+                    </div>
+                    <span class="text-3xl">🎨</span>
+                </div>
+                <div class="flex space-x-2 space-x-reverse">
+                    <button class="flex-1 bg-purple-600 text-white py-2 rounded-lg text-sm hover:bg-purple-700">
+                        تعديل
+                    </button>
+                    <button class="flex-1 bg-red-600 text-white py-2 rounded-lg text-sm hover:bg-red-700">
+                        إلغاء
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- شريط التنقل السفلي -->
+        <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-4 py-2">
+            <div class="flex justify-around items-center">
+                <button onclick="showMapTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">🗺️</span>
+                    <span class="text-xs font-medium">الخريطة</span>
+                </button>
+                <button onclick="showExploreTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">🔍</span>
+                    <span class="text-xs font-medium">الاستكشاف</span>
+                </button>
+                <button onclick="showBookingsTab()" class="nav-btn active flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">📅</span>
+                    <span class="text-xs font-medium">الحجوزات</span>
+                </button>
+                <button onclick="showAccountTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">👤</span>
+                    <span class="text-xs font-medium">الحساب</span>
+                </button>
             </div>
         </div>
     </div>
@@ -328,6 +1046,170 @@
                 </button>
             </div>
         </div>
+        
+        <!-- شريط التنقل السفلي -->
+        <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-4 py-2">
+            <div class="flex justify-around items-center">
+                <button onclick="showMapTab()" class="nav-btn active flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">🗺️</span>
+                    <span class="text-xs font-medium">الخريطة</span>
+                </button>
+                <button onclick="showExploreTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">🔍</span>
+                    <span class="text-xs font-medium">الاستكشاف</span>
+                </button>
+                <button onclick="showBookingsTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">📅</span>
+                    <span class="text-xs font-medium">الحجوزات</span>
+                </button>
+                <button onclick="showAccountTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">👤</span>
+                    <span class="text-xs font-medium">الحساب</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- شاشة الاستكشاف -->
+    <div id="exploreScreen" class="hidden min-h-screen bg-gray-100 pb-20">
+        <div class="bg-white shadow-lg p-4">
+            <h2 class="text-xl font-bold text-center">استكشف التجارب</h2>
+        </div>
+        
+        <div class="p-4 space-y-4">
+            <div class="bg-white rounded-2xl shadow-lg p-4">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="text-right">
+                        <h3 class="font-bold">ورشة صناعة السبح</h3>
+                        <p class="text-gray-600 text-sm">تعلم صناعة السبح التقليدية</p>
+                        <p class="text-purple-600 font-semibold">180 ريال</p>
+                    </div>
+                    <span class="text-3xl">📿</span>
+                </div>
+                <button onclick="showExperience(1)" class="w-full bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700">
+                    عرض التفاصيل
+                </button>
+            </div>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-4">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="text-right">
+                        <h3 class="font-bold">تجربة الرماية التراثية</h3>
+                        <p class="text-gray-600 text-sm">تعلم فن الرماية بالقوس والسهم</p>
+                        <p class="text-purple-600 font-semibold">100 ريال</p>
+                    </div>
+                    <span class="text-3xl">🏹</span>
+                </div>
+                <button onclick="showExperience(2)" class="w-full bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700">
+                    عرض التفاصيل
+                </button>
+            </div>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-4">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="text-right">
+                        <h3 class="font-bold">ورشة الخط العربي والزخرفة</h3>
+                        <p class="text-gray-600 text-sm">تعلم فن الخط العربي الجميل</p>
+                        <p class="text-purple-600 font-semibold">120 ريال</p>
+                    </div>
+                    <span class="text-3xl">🎨</span>
+                </div>
+                <button onclick="showExperience(3)" class="w-full bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700">
+                    عرض التفاصيل
+                </button>
+            </div>
+        </div>
+        
+        <!-- شريط التنقل السفلي -->
+        <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-4 py-2">
+            <div class="flex justify-around items-center">
+                <button onclick="showMapTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">🗺️</span>
+                    <span class="text-xs font-medium">الخريطة</span>
+                </button>
+                <button onclick="showExploreTab()" class="nav-btn active flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">🔍</span>
+                    <span class="text-xs font-medium">الاستكشاف</span>
+                </button>
+                <button onclick="showBookingsTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">📅</span>
+                    <span class="text-xs font-medium">الحجوزات</span>
+                </button>
+                <button onclick="showAccountTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">👤</span>
+                    <span class="text-xs font-medium">الحساب</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- شاشة الحجوزات -->
+    <div id="bookingsScreen" class="hidden min-h-screen bg-gray-100 pb-20">
+        <div class="bg-white shadow-lg p-4">
+            <h2 class="text-xl font-bold text-center">حجوزاتي</h2>
+        </div>
+        
+        <div class="p-4 space-y-4">
+            <div class="bg-white rounded-2xl shadow-lg p-4">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="text-right">
+                        <h3 class="font-bold">تجربة الرماية التراثية</h3>
+                        <p class="text-gray-600 text-sm">الجمعة 15/12 - 3:00 م</p>
+                        <p class="text-purple-600 font-semibold">200 ريال</p>
+                    </div>
+                    <span class="text-3xl">🏹</span>
+                </div>
+                <div class="flex space-x-2 space-x-reverse">
+                    <button class="flex-1 bg-purple-600 text-white py-2 rounded-lg text-sm hover:bg-purple-700">
+                        تعديل
+                    </button>
+                    <button class="flex-1 bg-red-600 text-white py-2 rounded-lg text-sm hover:bg-red-700">
+                        إلغاء
+                    </button>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-4">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="text-right">
+                        <h3 class="font-bold">ورشة الخط العربي</h3>
+                        <p class="text-gray-600 text-sm">السبت 23/12 - 10:00 ص</p>
+                        <p class="text-purple-600 font-semibold">150 ريال</p>
+                    </div>
+                    <span class="text-3xl">🎨</span>
+                </div>
+                <div class="flex space-x-2 space-x-reverse">
+                    <button class="flex-1 bg-purple-600 text-white py-2 rounded-lg text-sm hover:bg-purple-700">
+                        تعديل
+                    </button>
+                    <button class="flex-1 bg-red-600 text-white py-2 rounded-lg text-sm hover:bg-red-700">
+                        إلغاء
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- شريط التنقل السفلي -->
+        <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-4 py-2">
+            <div class="flex justify-around items-center">
+                <button onclick="showMapTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">🗺️</span>
+                    <span class="text-xs font-medium">الخريطة</span>
+                </button>
+                <button onclick="showExploreTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">🔍</span>
+                    <span class="text-xs font-medium">الاستكشاف</span>
+                </button>
+                <button onclick="showBookingsTab()" class="nav-btn active flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">📅</span>
+                    <span class="text-xs font-medium">الحجوزات</span>
+                </button>
+                <button onclick="showAccountTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">👤</span>
+                    <span class="text-xs font-medium">الحساب</span>
+                </button>
+            </div>
+        </div>
     </div>
 
     <!-- شاشة تفاصيل التجربة -->
@@ -380,6 +1262,170 @@
                 </button>
             </div>
         </div>
+        
+        <!-- شريط التنقل السفلي -->
+        <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-4 py-2">
+            <div class="flex justify-around items-center">
+                <button onclick="showMapTab()" class="nav-btn active flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">🗺️</span>
+                    <span class="text-xs font-medium">الخريطة</span>
+                </button>
+                <button onclick="showExploreTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">🔍</span>
+                    <span class="text-xs font-medium">الاستكشاف</span>
+                </button>
+                <button onclick="showBookingsTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">📅</span>
+                    <span class="text-xs font-medium">الحجوزات</span>
+                </button>
+                <button onclick="showAccountTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">👤</span>
+                    <span class="text-xs font-medium">الحساب</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- شاشة الاستكشاف -->
+    <div id="exploreScreen" class="hidden min-h-screen bg-gray-100 pb-20">
+        <div class="bg-white shadow-lg p-4">
+            <h2 class="text-xl font-bold text-center">استكشف التجارب</h2>
+        </div>
+        
+        <div class="p-4 space-y-4">
+            <div class="bg-white rounded-2xl shadow-lg p-4">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="text-right">
+                        <h3 class="font-bold">ورشة صناعة السبح</h3>
+                        <p class="text-gray-600 text-sm">تعلم صناعة السبح التقليدية</p>
+                        <p class="text-purple-600 font-semibold">180 ريال</p>
+                    </div>
+                    <span class="text-3xl">📿</span>
+                </div>
+                <button onclick="showExperience(1)" class="w-full bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700">
+                    عرض التفاصيل
+                </button>
+            </div>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-4">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="text-right">
+                        <h3 class="font-bold">تجربة الرماية التراثية</h3>
+                        <p class="text-gray-600 text-sm">تعلم فن الرماية بالقوس والسهم</p>
+                        <p class="text-purple-600 font-semibold">100 ريال</p>
+                    </div>
+                    <span class="text-3xl">🏹</span>
+                </div>
+                <button onclick="showExperience(2)" class="w-full bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700">
+                    عرض التفاصيل
+                </button>
+            </div>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-4">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="text-right">
+                        <h3 class="font-bold">ورشة الخط العربي والزخرفة</h3>
+                        <p class="text-gray-600 text-sm">تعلم فن الخط العربي الجميل</p>
+                        <p class="text-purple-600 font-semibold">120 ريال</p>
+                    </div>
+                    <span class="text-3xl">🎨</span>
+                </div>
+                <button onclick="showExperience(3)" class="w-full bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700">
+                    عرض التفاصيل
+                </button>
+            </div>
+        </div>
+        
+        <!-- شريط التنقل السفلي -->
+        <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-4 py-2">
+            <div class="flex justify-around items-center">
+                <button onclick="showMapTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">🗺️</span>
+                    <span class="text-xs font-medium">الخريطة</span>
+                </button>
+                <button onclick="showExploreTab()" class="nav-btn active flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">🔍</span>
+                    <span class="text-xs font-medium">الاستكشاف</span>
+                </button>
+                <button onclick="showBookingsTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">📅</span>
+                    <span class="text-xs font-medium">الحجوزات</span>
+                </button>
+                <button onclick="showAccountTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">👤</span>
+                    <span class="text-xs font-medium">الحساب</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- شاشة الحجوزات -->
+    <div id="bookingsScreen" class="hidden min-h-screen bg-gray-100 pb-20">
+        <div class="bg-white shadow-lg p-4">
+            <h2 class="text-xl font-bold text-center">حجوزاتي</h2>
+        </div>
+        
+        <div class="p-4 space-y-4">
+            <div class="bg-white rounded-2xl shadow-lg p-4">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="text-right">
+                        <h3 class="font-bold">تجربة الرماية التراثية</h3>
+                        <p class="text-gray-600 text-sm">الجمعة 15/12 - 3:00 م</p>
+                        <p class="text-purple-600 font-semibold">200 ريال</p>
+                    </div>
+                    <span class="text-3xl">🏹</span>
+                </div>
+                <div class="flex space-x-2 space-x-reverse">
+                    <button class="flex-1 bg-purple-600 text-white py-2 rounded-lg text-sm hover:bg-purple-700">
+                        تعديل
+                    </button>
+                    <button class="flex-1 bg-red-600 text-white py-2 rounded-lg text-sm hover:bg-red-700">
+                        إلغاء
+                    </button>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-4">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="text-right">
+                        <h3 class="font-bold">ورشة الخط العربي</h3>
+                        <p class="text-gray-600 text-sm">السبت 23/12 - 10:00 ص</p>
+                        <p class="text-purple-600 font-semibold">150 ريال</p>
+                    </div>
+                    <span class="text-3xl">🎨</span>
+                </div>
+                <div class="flex space-x-2 space-x-reverse">
+                    <button class="flex-1 bg-purple-600 text-white py-2 rounded-lg text-sm hover:bg-purple-700">
+                        تعديل
+                    </button>
+                    <button class="flex-1 bg-red-600 text-white py-2 rounded-lg text-sm hover:bg-red-700">
+                        إلغاء
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- شريط التنقل السفلي -->
+        <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-4 py-2">
+            <div class="flex justify-around items-center">
+                <button onclick="showMapTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">🗺️</span>
+                    <span class="text-xs font-medium">الخريطة</span>
+                </button>
+                <button onclick="showExploreTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">🔍</span>
+                    <span class="text-xs font-medium">الاستكشاف</span>
+                </button>
+                <button onclick="showBookingsTab()" class="nav-btn active flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">📅</span>
+                    <span class="text-xs font-medium">الحجوزات</span>
+                </button>
+                <button onclick="showAccountTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">👤</span>
+                    <span class="text-xs font-medium">الحساب</span>
+                </button>
+            </div>
+        </div>
     </div>
 
     <!-- شاشة الدفع -->
@@ -411,6 +1457,170 @@
                 
                 <button onclick="showConfirmation()" class="w-full bg-purple-600 text-white py-3 rounded-xl font-semibold hover:bg-purple-700 transition-colors">
                     إتمام الدفع
+                </button>
+            </div>
+        </div>
+        
+        <!-- شريط التنقل السفلي -->
+        <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-4 py-2">
+            <div class="flex justify-around items-center">
+                <button onclick="showMapTab()" class="nav-btn active flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">🗺️</span>
+                    <span class="text-xs font-medium">الخريطة</span>
+                </button>
+                <button onclick="showExploreTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">🔍</span>
+                    <span class="text-xs font-medium">الاستكشاف</span>
+                </button>
+                <button onclick="showBookingsTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">📅</span>
+                    <span class="text-xs font-medium">الحجوزات</span>
+                </button>
+                <button onclick="showAccountTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">👤</span>
+                    <span class="text-xs font-medium">الحساب</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- شاشة الاستكشاف -->
+    <div id="exploreScreen" class="hidden min-h-screen bg-gray-100 pb-20">
+        <div class="bg-white shadow-lg p-4">
+            <h2 class="text-xl font-bold text-center">استكشف التجارب</h2>
+        </div>
+        
+        <div class="p-4 space-y-4">
+            <div class="bg-white rounded-2xl shadow-lg p-4">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="text-right">
+                        <h3 class="font-bold">ورشة صناعة السبح</h3>
+                        <p class="text-gray-600 text-sm">تعلم صناعة السبح التقليدية</p>
+                        <p class="text-purple-600 font-semibold">180 ريال</p>
+                    </div>
+                    <span class="text-3xl">📿</span>
+                </div>
+                <button onclick="showExperience(1)" class="w-full bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700">
+                    عرض التفاصيل
+                </button>
+            </div>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-4">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="text-right">
+                        <h3 class="font-bold">تجربة الرماية التراثية</h3>
+                        <p class="text-gray-600 text-sm">تعلم فن الرماية بالقوس والسهم</p>
+                        <p class="text-purple-600 font-semibold">100 ريال</p>
+                    </div>
+                    <span class="text-3xl">🏹</span>
+                </div>
+                <button onclick="showExperience(2)" class="w-full bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700">
+                    عرض التفاصيل
+                </button>
+            </div>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-4">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="text-right">
+                        <h3 class="font-bold">ورشة الخط العربي والزخرفة</h3>
+                        <p class="text-gray-600 text-sm">تعلم فن الخط العربي الجميل</p>
+                        <p class="text-purple-600 font-semibold">120 ريال</p>
+                    </div>
+                    <span class="text-3xl">🎨</span>
+                </div>
+                <button onclick="showExperience(3)" class="w-full bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700">
+                    عرض التفاصيل
+                </button>
+            </div>
+        </div>
+        
+        <!-- شريط التنقل السفلي -->
+        <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-4 py-2">
+            <div class="flex justify-around items-center">
+                <button onclick="showMapTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">🗺️</span>
+                    <span class="text-xs font-medium">الخريطة</span>
+                </button>
+                <button onclick="showExploreTab()" class="nav-btn active flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">🔍</span>
+                    <span class="text-xs font-medium">الاستكشاف</span>
+                </button>
+                <button onclick="showBookingsTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">📅</span>
+                    <span class="text-xs font-medium">الحجوزات</span>
+                </button>
+                <button onclick="showAccountTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">👤</span>
+                    <span class="text-xs font-medium">الحساب</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- شاشة الحجوزات -->
+    <div id="bookingsScreen" class="hidden min-h-screen bg-gray-100 pb-20">
+        <div class="bg-white shadow-lg p-4">
+            <h2 class="text-xl font-bold text-center">حجوزاتي</h2>
+        </div>
+        
+        <div class="p-4 space-y-4">
+            <div class="bg-white rounded-2xl shadow-lg p-4">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="text-right">
+                        <h3 class="font-bold">تجربة الرماية التراثية</h3>
+                        <p class="text-gray-600 text-sm">الجمعة 15/12 - 3:00 م</p>
+                        <p class="text-purple-600 font-semibold">200 ريال</p>
+                    </div>
+                    <span class="text-3xl">🏹</span>
+                </div>
+                <div class="flex space-x-2 space-x-reverse">
+                    <button class="flex-1 bg-purple-600 text-white py-2 rounded-lg text-sm hover:bg-purple-700">
+                        تعديل
+                    </button>
+                    <button class="flex-1 bg-red-600 text-white py-2 rounded-lg text-sm hover:bg-red-700">
+                        إلغاء
+                    </button>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-4">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="text-right">
+                        <h3 class="font-bold">ورشة الخط العربي</h3>
+                        <p class="text-gray-600 text-sm">السبت 23/12 - 10:00 ص</p>
+                        <p class="text-purple-600 font-semibold">150 ريال</p>
+                    </div>
+                    <span class="text-3xl">🎨</span>
+                </div>
+                <div class="flex space-x-2 space-x-reverse">
+                    <button class="flex-1 bg-purple-600 text-white py-2 rounded-lg text-sm hover:bg-purple-700">
+                        تعديل
+                    </button>
+                    <button class="flex-1 bg-red-600 text-white py-2 rounded-lg text-sm hover:bg-red-700">
+                        إلغاء
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- شريط التنقل السفلي -->
+        <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-4 py-2">
+            <div class="flex justify-around items-center">
+                <button onclick="showMapTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">🗺️</span>
+                    <span class="text-xs font-medium">الخريطة</span>
+                </button>
+                <button onclick="showExploreTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">🔍</span>
+                    <span class="text-xs font-medium">الاستكشاف</span>
+                </button>
+                <button onclick="showBookingsTab()" class="nav-btn active flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">📅</span>
+                    <span class="text-xs font-medium">الحجوزات</span>
+                </button>
+                <button onclick="showAccountTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">👤</span>
+                    <span class="text-xs font-medium">الحساب</span>
                 </button>
             </div>
         </div>
@@ -446,6 +1656,170 @@
                 </button>
                 <button onclick="showMap()" class="w-full border border-gray-300 text-gray-700 py-3 rounded-xl font-semibold hover:bg-gray-50 transition-colors">
                     المتابعة كضيف
+                </button>
+            </div>
+        </div>
+        
+        <!-- شريط التنقل السفلي -->
+        <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-4 py-2">
+            <div class="flex justify-around items-center">
+                <button onclick="showMapTab()" class="nav-btn active flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">🗺️</span>
+                    <span class="text-xs font-medium">الخريطة</span>
+                </button>
+                <button onclick="showExploreTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">🔍</span>
+                    <span class="text-xs font-medium">الاستكشاف</span>
+                </button>
+                <button onclick="showBookingsTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">📅</span>
+                    <span class="text-xs font-medium">الحجوزات</span>
+                </button>
+                <button onclick="showAccountTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">👤</span>
+                    <span class="text-xs font-medium">الحساب</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- شاشة الاستكشاف -->
+    <div id="exploreScreen" class="hidden min-h-screen bg-gray-100 pb-20">
+        <div class="bg-white shadow-lg p-4">
+            <h2 class="text-xl font-bold text-center">استكشف التجارب</h2>
+        </div>
+        
+        <div class="p-4 space-y-4">
+            <div class="bg-white rounded-2xl shadow-lg p-4">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="text-right">
+                        <h3 class="font-bold">ورشة صناعة السبح</h3>
+                        <p class="text-gray-600 text-sm">تعلم صناعة السبح التقليدية</p>
+                        <p class="text-purple-600 font-semibold">180 ريال</p>
+                    </div>
+                    <span class="text-3xl">📿</span>
+                </div>
+                <button onclick="showExperience(1)" class="w-full bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700">
+                    عرض التفاصيل
+                </button>
+            </div>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-4">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="text-right">
+                        <h3 class="font-bold">تجربة الرماية التراثية</h3>
+                        <p class="text-gray-600 text-sm">تعلم فن الرماية بالقوس والسهم</p>
+                        <p class="text-purple-600 font-semibold">100 ريال</p>
+                    </div>
+                    <span class="text-3xl">🏹</span>
+                </div>
+                <button onclick="showExperience(2)" class="w-full bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700">
+                    عرض التفاصيل
+                </button>
+            </div>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-4">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="text-right">
+                        <h3 class="font-bold">ورشة الخط العربي والزخرفة</h3>
+                        <p class="text-gray-600 text-sm">تعلم فن الخط العربي الجميل</p>
+                        <p class="text-purple-600 font-semibold">120 ريال</p>
+                    </div>
+                    <span class="text-3xl">🎨</span>
+                </div>
+                <button onclick="showExperience(3)" class="w-full bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700">
+                    عرض التفاصيل
+                </button>
+            </div>
+        </div>
+        
+        <!-- شريط التنقل السفلي -->
+        <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-4 py-2">
+            <div class="flex justify-around items-center">
+                <button onclick="showMapTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">🗺️</span>
+                    <span class="text-xs font-medium">الخريطة</span>
+                </button>
+                <button onclick="showExploreTab()" class="nav-btn active flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">🔍</span>
+                    <span class="text-xs font-medium">الاستكشاف</span>
+                </button>
+                <button onclick="showBookingsTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">📅</span>
+                    <span class="text-xs font-medium">الحجوزات</span>
+                </button>
+                <button onclick="showAccountTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">👤</span>
+                    <span class="text-xs font-medium">الحساب</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- شاشة الحجوزات -->
+    <div id="bookingsScreen" class="hidden min-h-screen bg-gray-100 pb-20">
+        <div class="bg-white shadow-lg p-4">
+            <h2 class="text-xl font-bold text-center">حجوزاتي</h2>
+        </div>
+        
+        <div class="p-4 space-y-4">
+            <div class="bg-white rounded-2xl shadow-lg p-4">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="text-right">
+                        <h3 class="font-bold">تجربة الرماية التراثية</h3>
+                        <p class="text-gray-600 text-sm">الجمعة 15/12 - 3:00 م</p>
+                        <p class="text-purple-600 font-semibold">200 ريال</p>
+                    </div>
+                    <span class="text-3xl">🏹</span>
+                </div>
+                <div class="flex space-x-2 space-x-reverse">
+                    <button class="flex-1 bg-purple-600 text-white py-2 rounded-lg text-sm hover:bg-purple-700">
+                        تعديل
+                    </button>
+                    <button class="flex-1 bg-red-600 text-white py-2 rounded-lg text-sm hover:bg-red-700">
+                        إلغاء
+                    </button>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-4">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="text-right">
+                        <h3 class="font-bold">ورشة الخط العربي</h3>
+                        <p class="text-gray-600 text-sm">السبت 23/12 - 10:00 ص</p>
+                        <p class="text-purple-600 font-semibold">150 ريال</p>
+                    </div>
+                    <span class="text-3xl">🎨</span>
+                </div>
+                <div class="flex space-x-2 space-x-reverse">
+                    <button class="flex-1 bg-purple-600 text-white py-2 rounded-lg text-sm hover:bg-purple-700">
+                        تعديل
+                    </button>
+                    <button class="flex-1 bg-red-600 text-white py-2 rounded-lg text-sm hover:bg-red-700">
+                        إلغاء
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- شريط التنقل السفلي -->
+        <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-4 py-2">
+            <div class="flex justify-around items-center">
+                <button onclick="showMapTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">🗺️</span>
+                    <span class="text-xs font-medium">الخريطة</span>
+                </button>
+                <button onclick="showExploreTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">🔍</span>
+                    <span class="text-xs font-medium">الاستكشاف</span>
+                </button>
+                <button onclick="showBookingsTab()" class="nav-btn active flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">📅</span>
+                    <span class="text-xs font-medium">الحجوزات</span>
+                </button>
+                <button onclick="showAccountTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">👤</span>
+                    <span class="text-xs font-medium">الحساب</span>
                 </button>
             </div>
         </div>
@@ -500,6 +1874,170 @@
                 </button>
             </div>
         </div>
+        
+        <!-- شريط التنقل السفلي -->
+        <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-4 py-2">
+            <div class="flex justify-around items-center">
+                <button onclick="showMapTab()" class="nav-btn active flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">🗺️</span>
+                    <span class="text-xs font-medium">الخريطة</span>
+                </button>
+                <button onclick="showExploreTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">🔍</span>
+                    <span class="text-xs font-medium">الاستكشاف</span>
+                </button>
+                <button onclick="showBookingsTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">📅</span>
+                    <span class="text-xs font-medium">الحجوزات</span>
+                </button>
+                <button onclick="showAccountTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">👤</span>
+                    <span class="text-xs font-medium">الحساب</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- شاشة الاستكشاف -->
+    <div id="exploreScreen" class="hidden min-h-screen bg-gray-100 pb-20">
+        <div class="bg-white shadow-lg p-4">
+            <h2 class="text-xl font-bold text-center">استكشف التجارب</h2>
+        </div>
+        
+        <div class="p-4 space-y-4">
+            <div class="bg-white rounded-2xl shadow-lg p-4">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="text-right">
+                        <h3 class="font-bold">ورشة صناعة السبح</h3>
+                        <p class="text-gray-600 text-sm">تعلم صناعة السبح التقليدية</p>
+                        <p class="text-purple-600 font-semibold">180 ريال</p>
+                    </div>
+                    <span class="text-3xl">📿</span>
+                </div>
+                <button onclick="showExperience(1)" class="w-full bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700">
+                    عرض التفاصيل
+                </button>
+            </div>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-4">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="text-right">
+                        <h3 class="font-bold">تجربة الرماية التراثية</h3>
+                        <p class="text-gray-600 text-sm">تعلم فن الرماية بالقوس والسهم</p>
+                        <p class="text-purple-600 font-semibold">100 ريال</p>
+                    </div>
+                    <span class="text-3xl">🏹</span>
+                </div>
+                <button onclick="showExperience(2)" class="w-full bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700">
+                    عرض التفاصيل
+                </button>
+            </div>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-4">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="text-right">
+                        <h3 class="font-bold">ورشة الخط العربي والزخرفة</h3>
+                        <p class="text-gray-600 text-sm">تعلم فن الخط العربي الجميل</p>
+                        <p class="text-purple-600 font-semibold">120 ريال</p>
+                    </div>
+                    <span class="text-3xl">🎨</span>
+                </div>
+                <button onclick="showExperience(3)" class="w-full bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700">
+                    عرض التفاصيل
+                </button>
+            </div>
+        </div>
+        
+        <!-- شريط التنقل السفلي -->
+        <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-4 py-2">
+            <div class="flex justify-around items-center">
+                <button onclick="showMapTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">🗺️</span>
+                    <span class="text-xs font-medium">الخريطة</span>
+                </button>
+                <button onclick="showExploreTab()" class="nav-btn active flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">🔍</span>
+                    <span class="text-xs font-medium">الاستكشاف</span>
+                </button>
+                <button onclick="showBookingsTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">📅</span>
+                    <span class="text-xs font-medium">الحجوزات</span>
+                </button>
+                <button onclick="showAccountTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">👤</span>
+                    <span class="text-xs font-medium">الحساب</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- شاشة الحجوزات -->
+    <div id="bookingsScreen" class="hidden min-h-screen bg-gray-100 pb-20">
+        <div class="bg-white shadow-lg p-4">
+            <h2 class="text-xl font-bold text-center">حجوزاتي</h2>
+        </div>
+        
+        <div class="p-4 space-y-4">
+            <div class="bg-white rounded-2xl shadow-lg p-4">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="text-right">
+                        <h3 class="font-bold">تجربة الرماية التراثية</h3>
+                        <p class="text-gray-600 text-sm">الجمعة 15/12 - 3:00 م</p>
+                        <p class="text-purple-600 font-semibold">200 ريال</p>
+                    </div>
+                    <span class="text-3xl">🏹</span>
+                </div>
+                <div class="flex space-x-2 space-x-reverse">
+                    <button class="flex-1 bg-purple-600 text-white py-2 rounded-lg text-sm hover:bg-purple-700">
+                        تعديل
+                    </button>
+                    <button class="flex-1 bg-red-600 text-white py-2 rounded-lg text-sm hover:bg-red-700">
+                        إلغاء
+                    </button>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-4">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="text-right">
+                        <h3 class="font-bold">ورشة الخط العربي</h3>
+                        <p class="text-gray-600 text-sm">السبت 23/12 - 10:00 ص</p>
+                        <p class="text-purple-600 font-semibold">150 ريال</p>
+                    </div>
+                    <span class="text-3xl">🎨</span>
+                </div>
+                <div class="flex space-x-2 space-x-reverse">
+                    <button class="flex-1 bg-purple-600 text-white py-2 rounded-lg text-sm hover:bg-purple-700">
+                        تعديل
+                    </button>
+                    <button class="flex-1 bg-red-600 text-white py-2 rounded-lg text-sm hover:bg-red-700">
+                        إلغاء
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- شريط التنقل السفلي -->
+        <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-4 py-2">
+            <div class="flex justify-around items-center">
+                <button onclick="showMapTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">🗺️</span>
+                    <span class="text-xs font-medium">الخريطة</span>
+                </button>
+                <button onclick="showExploreTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">🔍</span>
+                    <span class="text-xs font-medium">الاستكشاف</span>
+                </button>
+                <button onclick="showBookingsTab()" class="nav-btn active flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">📅</span>
+                    <span class="text-xs font-medium">الحجوزات</span>
+                </button>
+                <button onclick="showAccountTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">👤</span>
+                    <span class="text-xs font-medium">الحساب</span>
+                </button>
+            </div>
+        </div>
     </div>
 
     <!-- شاشة التجارب القادمة -->
@@ -550,6 +2088,170 @@
                 </div>
             </div>
         </div>
+        
+        <!-- شريط التنقل السفلي -->
+        <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-4 py-2">
+            <div class="flex justify-around items-center">
+                <button onclick="showMapTab()" class="nav-btn active flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">🗺️</span>
+                    <span class="text-xs font-medium">الخريطة</span>
+                </button>
+                <button onclick="showExploreTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">🔍</span>
+                    <span class="text-xs font-medium">الاستكشاف</span>
+                </button>
+                <button onclick="showBookingsTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">📅</span>
+                    <span class="text-xs font-medium">الحجوزات</span>
+                </button>
+                <button onclick="showAccountTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">👤</span>
+                    <span class="text-xs font-medium">الحساب</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- شاشة الاستكشاف -->
+    <div id="exploreScreen" class="hidden min-h-screen bg-gray-100 pb-20">
+        <div class="bg-white shadow-lg p-4">
+            <h2 class="text-xl font-bold text-center">استكشف التجارب</h2>
+        </div>
+        
+        <div class="p-4 space-y-4">
+            <div class="bg-white rounded-2xl shadow-lg p-4">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="text-right">
+                        <h3 class="font-bold">ورشة صناعة السبح</h3>
+                        <p class="text-gray-600 text-sm">تعلم صناعة السبح التقليدية</p>
+                        <p class="text-purple-600 font-semibold">180 ريال</p>
+                    </div>
+                    <span class="text-3xl">📿</span>
+                </div>
+                <button onclick="showExperience(1)" class="w-full bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700">
+                    عرض التفاصيل
+                </button>
+            </div>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-4">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="text-right">
+                        <h3 class="font-bold">تجربة الرماية التراثية</h3>
+                        <p class="text-gray-600 text-sm">تعلم فن الرماية بالقوس والسهم</p>
+                        <p class="text-purple-600 font-semibold">100 ريال</p>
+                    </div>
+                    <span class="text-3xl">🏹</span>
+                </div>
+                <button onclick="showExperience(2)" class="w-full bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700">
+                    عرض التفاصيل
+                </button>
+            </div>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-4">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="text-right">
+                        <h3 class="font-bold">ورشة الخط العربي والزخرفة</h3>
+                        <p class="text-gray-600 text-sm">تعلم فن الخط العربي الجميل</p>
+                        <p class="text-purple-600 font-semibold">120 ريال</p>
+                    </div>
+                    <span class="text-3xl">🎨</span>
+                </div>
+                <button onclick="showExperience(3)" class="w-full bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700">
+                    عرض التفاصيل
+                </button>
+            </div>
+        </div>
+        
+        <!-- شريط التنقل السفلي -->
+        <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-4 py-2">
+            <div class="flex justify-around items-center">
+                <button onclick="showMapTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">🗺️</span>
+                    <span class="text-xs font-medium">الخريطة</span>
+                </button>
+                <button onclick="showExploreTab()" class="nav-btn active flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">🔍</span>
+                    <span class="text-xs font-medium">الاستكشاف</span>
+                </button>
+                <button onclick="showBookingsTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">📅</span>
+                    <span class="text-xs font-medium">الحجوزات</span>
+                </button>
+                <button onclick="showAccountTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">👤</span>
+                    <span class="text-xs font-medium">الحساب</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- شاشة الحجوزات -->
+    <div id="bookingsScreen" class="hidden min-h-screen bg-gray-100 pb-20">
+        <div class="bg-white shadow-lg p-4">
+            <h2 class="text-xl font-bold text-center">حجوزاتي</h2>
+        </div>
+        
+        <div class="p-4 space-y-4">
+            <div class="bg-white rounded-2xl shadow-lg p-4">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="text-right">
+                        <h3 class="font-bold">تجربة الرماية التراثية</h3>
+                        <p class="text-gray-600 text-sm">الجمعة 15/12 - 3:00 م</p>
+                        <p class="text-purple-600 font-semibold">200 ريال</p>
+                    </div>
+                    <span class="text-3xl">🏹</span>
+                </div>
+                <div class="flex space-x-2 space-x-reverse">
+                    <button class="flex-1 bg-purple-600 text-white py-2 rounded-lg text-sm hover:bg-purple-700">
+                        تعديل
+                    </button>
+                    <button class="flex-1 bg-red-600 text-white py-2 rounded-lg text-sm hover:bg-red-700">
+                        إلغاء
+                    </button>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-4">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="text-right">
+                        <h3 class="font-bold">ورشة الخط العربي</h3>
+                        <p class="text-gray-600 text-sm">السبت 23/12 - 10:00 ص</p>
+                        <p class="text-purple-600 font-semibold">150 ريال</p>
+                    </div>
+                    <span class="text-3xl">🎨</span>
+                </div>
+                <div class="flex space-x-2 space-x-reverse">
+                    <button class="flex-1 bg-purple-600 text-white py-2 rounded-lg text-sm hover:bg-purple-700">
+                        تعديل
+                    </button>
+                    <button class="flex-1 bg-red-600 text-white py-2 rounded-lg text-sm hover:bg-red-700">
+                        إلغاء
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- شريط التنقل السفلي -->
+        <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-4 py-2">
+            <div class="flex justify-around items-center">
+                <button onclick="showMapTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">🗺️</span>
+                    <span class="text-xs font-medium">الخريطة</span>
+                </button>
+                <button onclick="showExploreTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">🔍</span>
+                    <span class="text-xs font-medium">الاستكشاف</span>
+                </button>
+                <button onclick="showBookingsTab()" class="nav-btn active flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">📅</span>
+                    <span class="text-xs font-medium">الحجوزات</span>
+                </button>
+                <button onclick="showAccountTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">👤</span>
+                    <span class="text-xs font-medium">الحساب</span>
+                </button>
+            </div>
+        </div>
     </div>
 
     <!-- شاشة حجوزات الضيف -->
@@ -581,6 +2283,170 @@
                     <span class="text-4xl block mb-2">📝</span>
                     <p>لا توجد حجوزات مؤقتة</p>
                 </div>
+            </div>
+        </div>
+        
+        <!-- شريط التنقل السفلي -->
+        <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-4 py-2">
+            <div class="flex justify-around items-center">
+                <button onclick="showMapTab()" class="nav-btn active flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">🗺️</span>
+                    <span class="text-xs font-medium">الخريطة</span>
+                </button>
+                <button onclick="showExploreTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">🔍</span>
+                    <span class="text-xs font-medium">الاستكشاف</span>
+                </button>
+                <button onclick="showBookingsTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">📅</span>
+                    <span class="text-xs font-medium">الحجوزات</span>
+                </button>
+                <button onclick="showAccountTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">👤</span>
+                    <span class="text-xs font-medium">الحساب</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- شاشة الاستكشاف -->
+    <div id="exploreScreen" class="hidden min-h-screen bg-gray-100 pb-20">
+        <div class="bg-white shadow-lg p-4">
+            <h2 class="text-xl font-bold text-center">استكشف التجارب</h2>
+        </div>
+        
+        <div class="p-4 space-y-4">
+            <div class="bg-white rounded-2xl shadow-lg p-4">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="text-right">
+                        <h3 class="font-bold">ورشة صناعة السبح</h3>
+                        <p class="text-gray-600 text-sm">تعلم صناعة السبح التقليدية</p>
+                        <p class="text-purple-600 font-semibold">180 ريال</p>
+                    </div>
+                    <span class="text-3xl">📿</span>
+                </div>
+                <button onclick="showExperience(1)" class="w-full bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700">
+                    عرض التفاصيل
+                </button>
+            </div>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-4">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="text-right">
+                        <h3 class="font-bold">تجربة الرماية التراثية</h3>
+                        <p class="text-gray-600 text-sm">تعلم فن الرماية بالقوس والسهم</p>
+                        <p class="text-purple-600 font-semibold">100 ريال</p>
+                    </div>
+                    <span class="text-3xl">🏹</span>
+                </div>
+                <button onclick="showExperience(2)" class="w-full bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700">
+                    عرض التفاصيل
+                </button>
+            </div>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-4">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="text-right">
+                        <h3 class="font-bold">ورشة الخط العربي والزخرفة</h3>
+                        <p class="text-gray-600 text-sm">تعلم فن الخط العربي الجميل</p>
+                        <p class="text-purple-600 font-semibold">120 ريال</p>
+                    </div>
+                    <span class="text-3xl">🎨</span>
+                </div>
+                <button onclick="showExperience(3)" class="w-full bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700">
+                    عرض التفاصيل
+                </button>
+            </div>
+        </div>
+        
+        <!-- شريط التنقل السفلي -->
+        <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-4 py-2">
+            <div class="flex justify-around items-center">
+                <button onclick="showMapTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">🗺️</span>
+                    <span class="text-xs font-medium">الخريطة</span>
+                </button>
+                <button onclick="showExploreTab()" class="nav-btn active flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">🔍</span>
+                    <span class="text-xs font-medium">الاستكشاف</span>
+                </button>
+                <button onclick="showBookingsTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">📅</span>
+                    <span class="text-xs font-medium">الحجوزات</span>
+                </button>
+                <button onclick="showAccountTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">👤</span>
+                    <span class="text-xs font-medium">الحساب</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- شاشة الحجوزات -->
+    <div id="bookingsScreen" class="hidden min-h-screen bg-gray-100 pb-20">
+        <div class="bg-white shadow-lg p-4">
+            <h2 class="text-xl font-bold text-center">حجوزاتي</h2>
+        </div>
+        
+        <div class="p-4 space-y-4">
+            <div class="bg-white rounded-2xl shadow-lg p-4">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="text-right">
+                        <h3 class="font-bold">تجربة الرماية التراثية</h3>
+                        <p class="text-gray-600 text-sm">الجمعة 15/12 - 3:00 م</p>
+                        <p class="text-purple-600 font-semibold">200 ريال</p>
+                    </div>
+                    <span class="text-3xl">🏹</span>
+                </div>
+                <div class="flex space-x-2 space-x-reverse">
+                    <button class="flex-1 bg-purple-600 text-white py-2 rounded-lg text-sm hover:bg-purple-700">
+                        تعديل
+                    </button>
+                    <button class="flex-1 bg-red-600 text-white py-2 rounded-lg text-sm hover:bg-red-700">
+                        إلغاء
+                    </button>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-4">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="text-right">
+                        <h3 class="font-bold">ورشة الخط العربي</h3>
+                        <p class="text-gray-600 text-sm">السبت 23/12 - 10:00 ص</p>
+                        <p class="text-purple-600 font-semibold">150 ريال</p>
+                    </div>
+                    <span class="text-3xl">🎨</span>
+                </div>
+                <div class="flex space-x-2 space-x-reverse">
+                    <button class="flex-1 bg-purple-600 text-white py-2 rounded-lg text-sm hover:bg-purple-700">
+                        تعديل
+                    </button>
+                    <button class="flex-1 bg-red-600 text-white py-2 rounded-lg text-sm hover:bg-red-700">
+                        إلغاء
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- شريط التنقل السفلي -->
+        <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-4 py-2">
+            <div class="flex justify-around items-center">
+                <button onclick="showMapTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">🗺️</span>
+                    <span class="text-xs font-medium">الخريطة</span>
+                </button>
+                <button onclick="showExploreTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">🔍</span>
+                    <span class="text-xs font-medium">الاستكشاف</span>
+                </button>
+                <button onclick="showBookingsTab()" class="nav-btn active flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">📅</span>
+                    <span class="text-xs font-medium">الحجوزات</span>
+                </button>
+                <button onclick="showAccountTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">👤</span>
+                    <span class="text-xs font-medium">الحساب</span>
+                </button>
             </div>
         </div>
     </div>
@@ -624,6 +2490,170 @@
                 </div>
             </div>
         </div>
+        
+        <!-- شريط التنقل السفلي -->
+        <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-4 py-2">
+            <div class="flex justify-around items-center">
+                <button onclick="showMapTab()" class="nav-btn active flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">🗺️</span>
+                    <span class="text-xs font-medium">الخريطة</span>
+                </button>
+                <button onclick="showExploreTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">🔍</span>
+                    <span class="text-xs font-medium">الاستكشاف</span>
+                </button>
+                <button onclick="showBookingsTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">📅</span>
+                    <span class="text-xs font-medium">الحجوزات</span>
+                </button>
+                <button onclick="showAccountTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">👤</span>
+                    <span class="text-xs font-medium">الحساب</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- شاشة الاستكشاف -->
+    <div id="exploreScreen" class="hidden min-h-screen bg-gray-100 pb-20">
+        <div class="bg-white shadow-lg p-4">
+            <h2 class="text-xl font-bold text-center">استكشف التجارب</h2>
+        </div>
+        
+        <div class="p-4 space-y-4">
+            <div class="bg-white rounded-2xl shadow-lg p-4">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="text-right">
+                        <h3 class="font-bold">ورشة صناعة السبح</h3>
+                        <p class="text-gray-600 text-sm">تعلم صناعة السبح التقليدية</p>
+                        <p class="text-purple-600 font-semibold">180 ريال</p>
+                    </div>
+                    <span class="text-3xl">📿</span>
+                </div>
+                <button onclick="showExperience(1)" class="w-full bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700">
+                    عرض التفاصيل
+                </button>
+            </div>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-4">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="text-right">
+                        <h3 class="font-bold">تجربة الرماية التراثية</h3>
+                        <p class="text-gray-600 text-sm">تعلم فن الرماية بالقوس والسهم</p>
+                        <p class="text-purple-600 font-semibold">100 ريال</p>
+                    </div>
+                    <span class="text-3xl">🏹</span>
+                </div>
+                <button onclick="showExperience(2)" class="w-full bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700">
+                    عرض التفاصيل
+                </button>
+            </div>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-4">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="text-right">
+                        <h3 class="font-bold">ورشة الخط العربي والزخرفة</h3>
+                        <p class="text-gray-600 text-sm">تعلم فن الخط العربي الجميل</p>
+                        <p class="text-purple-600 font-semibold">120 ريال</p>
+                    </div>
+                    <span class="text-3xl">🎨</span>
+                </div>
+                <button onclick="showExperience(3)" class="w-full bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700">
+                    عرض التفاصيل
+                </button>
+            </div>
+        </div>
+        
+        <!-- شريط التنقل السفلي -->
+        <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-4 py-2">
+            <div class="flex justify-around items-center">
+                <button onclick="showMapTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">🗺️</span>
+                    <span class="text-xs font-medium">الخريطة</span>
+                </button>
+                <button onclick="showExploreTab()" class="nav-btn active flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">🔍</span>
+                    <span class="text-xs font-medium">الاستكشاف</span>
+                </button>
+                <button onclick="showBookingsTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">📅</span>
+                    <span class="text-xs font-medium">الحجوزات</span>
+                </button>
+                <button onclick="showAccountTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">👤</span>
+                    <span class="text-xs font-medium">الحساب</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- شاشة الحجوزات -->
+    <div id="bookingsScreen" class="hidden min-h-screen bg-gray-100 pb-20">
+        <div class="bg-white shadow-lg p-4">
+            <h2 class="text-xl font-bold text-center">حجوزاتي</h2>
+        </div>
+        
+        <div class="p-4 space-y-4">
+            <div class="bg-white rounded-2xl shadow-lg p-4">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="text-right">
+                        <h3 class="font-bold">تجربة الرماية التراثية</h3>
+                        <p class="text-gray-600 text-sm">الجمعة 15/12 - 3:00 م</p>
+                        <p class="text-purple-600 font-semibold">200 ريال</p>
+                    </div>
+                    <span class="text-3xl">🏹</span>
+                </div>
+                <div class="flex space-x-2 space-x-reverse">
+                    <button class="flex-1 bg-purple-600 text-white py-2 rounded-lg text-sm hover:bg-purple-700">
+                        تعديل
+                    </button>
+                    <button class="flex-1 bg-red-600 text-white py-2 rounded-lg text-sm hover:bg-red-700">
+                        إلغاء
+                    </button>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-4">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="text-right">
+                        <h3 class="font-bold">ورشة الخط العربي</h3>
+                        <p class="text-gray-600 text-sm">السبت 23/12 - 10:00 ص</p>
+                        <p class="text-purple-600 font-semibold">150 ريال</p>
+                    </div>
+                    <span class="text-3xl">🎨</span>
+                </div>
+                <div class="flex space-x-2 space-x-reverse">
+                    <button class="flex-1 bg-purple-600 text-white py-2 rounded-lg text-sm hover:bg-purple-700">
+                        تعديل
+                    </button>
+                    <button class="flex-1 bg-red-600 text-white py-2 rounded-lg text-sm hover:bg-red-700">
+                        إلغاء
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- شريط التنقل السفلي -->
+        <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-4 py-2">
+            <div class="flex justify-around items-center">
+                <button onclick="showMapTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">🗺️</span>
+                    <span class="text-xs font-medium">الخريطة</span>
+                </button>
+                <button onclick="showExploreTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">🔍</span>
+                    <span class="text-xs font-medium">الاستكشاف</span>
+                </button>
+                <button onclick="showBookingsTab()" class="nav-btn active flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">📅</span>
+                    <span class="text-xs font-medium">الحجوزات</span>
+                </button>
+                <button onclick="showAccountTab()" class="nav-btn flex flex-col items-center py-2 px-3 rounded-lg">
+                    <span class="text-xl mb-1">👤</span>
+                    <span class="text-xs font-medium">الحساب</span>
+                </button>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -635,18 +2665,18 @@
         let mapPanY = 0;
 
         const experiences = {
-            1: { title: "ورشة المسرح التفاعلي", price: 180, icon: "🎭", category: "فنون وثقافة" },
-            2: { title: "ورشة الطبخ التقليدي", price: 100, icon: "🍳", category: "طبخ وطعام" },
-            3: { title: "ورشة الرسم المائي", price: 120, icon: "🎨", category: "فنون وثقافة" },
-            4: { title: "تجربة الجري الصباحي", price: 80, icon: "🏃‍♂️", category: "رياضة ومغامرة" },
-            5: { title: "جولة في المتحف الوطني", price: 50, icon: "🏛️", category: "ثقافية وتاريخية" },
-            6: { title: "ورشة الخط العربي", price: 90, icon: "✍️", category: "ثقافية وتاريخية" },
-            7: { title: "تجربة صناعة العطور", price: 200, icon: "🌸", category: "تعليمية" },
-            8: { title: "جولة في البلدة القديمة", price: 60, icon: "🕌", category: "ثقافية وتاريخية" },
-            9: { title: "ورشة صناعة الفخار", price: 140, icon: "🏺", category: "فنون وثقافة" },
-            10: { title: "تجربة التصوير الفوتوغرافي", price: 160, icon: "📸", category: "تعليمية" },
-            11: { title: "ورشة الموسيقى التراثية", price: 110, icon: "🎵", category: "ثقافية وتاريخية" },
-            12: { title: "تجربة ركوب الخيل", price: 250, icon: "🐎", category: "رياضة ومغامرة" }
+            1: { title: "ورشة صناعة السبح", price: 180, icon: "📿", category: "حرف يدوية" },
+            2: { title: "تجربة الرماية التراثية", price: 100, icon: "🏹", category: "رياضة" },
+            3: { title: "ورشة الخط العربي والزخرفة", price: 120, icon: "🎨", category: "حرف يدوية" },
+            4: { title: "رياضة المشي في الحرم", price: 80, icon: "🏃‍♂️", category: "رياضة" },
+            5: { title: "جولة في متحف دار المدينة", price: 50, icon: "🏛️", category: "ثقافية" },
+            6: { title: "ورشة الخط العربي بالجامعة", price: 90, icon: "✍️", category: "تعليمية" },
+            7: { title: "تجربة صناعة العطور العربية", price: 200, icon: "🌸", category: "حرف يدوية" },
+            8: { title: "جولة في المدينة القديمة", price: 60, icon: "🕌", category: "ثقافية" },
+            9: { title: "ورشة الفخار التراثي", price: 140, icon: "🏺", category: "حرف يدوية" },
+            10: { title: "تصوير المعالم الإسلامية", price: 160, icon: "📸", category: "تعليمية" },
+            11: { title: "ورشة الأناشيد الإسلامية", price: 110, icon: "🎵", category: "ثقافية" },
+            12: { title: "تجربة ركوب الخيل العربي", price: 250, icon: "🐎", category: "رياضة" }
         };
 
         function showScreen(screenId) {
@@ -665,6 +2695,75 @@
         function showUpcomingBookings() { showScreen('upcomingBookingsScreen'); }
         function showPastBookings() { showScreen('pastBookingsScreen'); }
         function showGuestBookings() { showScreen('guestBookingsScreen'); }
+
+        // وظائف التنقل السفلي
+        function showMapTab() {
+            showScreen('mapScreen');
+            updateActiveTab('map');
+        }
+
+        function showExploreTab() {
+            showScreen('exploreScreen');
+            updateActiveTab('explore');
+        }
+
+        function showBookingsTab() {
+            showScreen('bookingsScreen');
+            updateActiveTab('bookings');
+        }
+
+        function showAccountTab() {
+            showScreen('profileScreen');
+            updateActiveTab('account');
+        }
+
+        function updateActiveTab(activeTab) {
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('active', 'bg-purple-100', 'text-purple-600');
+                btn.classList.add('text-gray-600');
+            });
+            
+            const tabMap = {
+                'map': 0,
+                'explore': 1,
+                'bookings': 2,
+                'account': 3
+            };
+            
+            const activeIndex = tabMap[activeTab];
+            const navBtns = document.querySelectorAll('.nav-btn');
+            if (navBtns[activeIndex]) {
+                navBtns[activeIndex].classList.add('active', 'bg-purple-100', 'text-purple-600');
+                navBtns[activeIndex].classList.remove('text-gray-600');
+            }
+        }
+
+        // وظائف الفلترة
+        function filterByCategory(category) {
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                btn.classList.remove('active', 'bg-purple-600', 'text-white');
+                btn.classList.add('bg-gray-100', 'text-gray-700');
+            });
+            
+            event.target.classList.add('active', 'bg-purple-600', 'text-white');
+            event.target.classList.remove('bg-gray-100', 'text-gray-700');
+            
+            // فلترة النقاط على الخريطة
+            const pins = document.querySelectorAll('.experience-pin');
+            pins.forEach(pin => {
+                if (category === 'all') {
+                    pin.style.display = 'block';
+                } else {
+                    const experienceId = pin.getAttribute('onclick').match(/\d+/)[0];
+                    const experience = experiences[experienceId];
+                    if (experience && experience.category === category) {
+                        pin.style.display = 'block';
+                    } else {
+                        pin.style.display = 'none';
+                    }
+                }
+            });
+        }
 
         function showFilters() {
             document.getElementById('filtersModal').classList.remove('hidden');
@@ -878,5 +2977,5 @@
             showStart();
         });
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'96c32489860cbadc',t:'MTc1NDY5OTQwMy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'96c457b47708ee63',t:'MTc1NDcxMTk4NS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
